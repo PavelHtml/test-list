@@ -8,9 +8,7 @@
             <h3>
               <div
                 v-if="post.index === index"
-                ><v-text-field
-                :ref="`name${index}`"
-                v-model="post.name"></v-text-field>
+                ><v-text-field v-model="post.name"></v-text-field>
               </div>
               <div v-else>{{item.name}}</div>
             </h3>

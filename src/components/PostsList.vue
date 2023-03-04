@@ -3,7 +3,7 @@
     <v-list three-line>
       <template v-for="(item, index) in posts">
         <v-row class="align-center mb-5 hover" :key="item.id">
-          <v-col  sm="8" md="10" @click.prevent="editPost(index)">
+          <v-col  sm="8" md="9" @click.prevent="editPost(index)">
             <div class="id">{{item.id}}</div>
             <h3>
               <div
@@ -16,7 +16,7 @@
               <div v-show="updatePostIndex !== index">{{item.name}}</div>
             </h3>
           </v-col>
-          <v-col sm="4" md="2" class="d-flex flex-row">
+          <v-col sm="4" md="3" class="d-flex flex-row">
             <v-btn
               class="ma-2"
               color="red"

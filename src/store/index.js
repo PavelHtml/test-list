@@ -33,7 +33,8 @@ export default new Vuex.Store({
       state.searchPosts = state.allPosts
       state.posts = []
       if (state.searchPosts.length) {
-        for (let i = 0, j = 10; i < j; i++) {
+        const max = state.searchPosts.length
+        for (let i = 0, j = max < 10 ? max : 10; i < j; i++) {
           state.posts.push(state.searchPosts[i])
         }
       }

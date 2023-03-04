@@ -14,7 +14,17 @@ export default new Vuex.Store({
   mutations: {
     postsMutations (state, payload) {
       state.allPosts = payload
-      state.posts = payload
+      state.posts = []
+      for (let i = 0, j = 10; i < j; i++) {
+        state.posts.push(payload[i])
+      }
+    },
+    addPostsOnScroll (state, index) {
+      if (index < state.allPosts.length) {
+        for (let i = index, j = index + 10; i < j; i++) {
+          state.posts.push(state.allPosts[i])
+        }
+      }
     },
     addPost (state, post) {
       state.posts.unshift(post)
@@ -27,10 +37,14 @@ export default new Vuex.Store({
       console.log(state.posts[item.index].name)
     },
     searchPost (state, text) {
-      state.posts = state.allPosts.filter(post => {
+      const searchPosts = state.allPosts.filter(post => {
         const postName = post.name.toLowerCase()
         return postName.search(text.toLowerCase()) !== -1
       })
+      state.posts = []
+      for (let i = 0, j = 10; i < j; i++) {
+        state.posts.push(searchPosts[i])
+      }
     }
   },
   actions: {

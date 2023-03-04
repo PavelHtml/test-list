@@ -4,7 +4,7 @@
       <template v-for="(item, index) in posts">
         <v-row class="align-center mb-5 hover" :key="item.id">
           <v-col  sm="8" md="9">
-            <div class="id">{{item.id}}</div>
+            <div>{{item.id}}</div>
             <h3>
               <div
                 v-if="post.index === index"
@@ -96,13 +96,15 @@ export default {
       post: {
         index: null,
         name: null
-      }
+      },
+      postsCount: 10
     }
   },
   methods: {
     ...mapMutations({
       deletePost: 'deletePost',
-      editPostName: 'editPostName'
+      editPostName: 'editPostName',
+      addPostsOnScroll: 'addPostsOnScroll'
     }),
     ...mapActions({
       getTestData: 'getTestData'
@@ -118,10 +120,19 @@ export default {
     editPost (index, name) {
       this.post.name = name
       this.post.index = index
+    },
+    handleScroll (event) {
+      const windowHeight = document.body.scrollHeight - 100
+      const scrollTop = Math.ceil(window.scrollY + window.innerHeight)
+      if (windowHeight < scrollTop) {
+        this.addPostsOnScroll(this.postsCount)
+        this.postsCount += 10
+      }
     }
   },
   mounted () {
     this.getTestData()
+    window.addEventListener('scroll', this.handleScroll)
   }
 }
 </script>

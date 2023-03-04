@@ -7,8 +7,7 @@ export default new Vuex.Store({
   state: {
     allPosts: null,
     searchPosts: null,
-    posts: null,
-    search: null
+    posts: null
   },
   getters: {
     getPosts: state => state.posts

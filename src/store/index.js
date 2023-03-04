@@ -44,7 +44,6 @@ export default new Vuex.Store({
     },
     editPostName (state, item) {
       state.posts[item.index].name = item.name
-      console.log(state.posts[item.index].name)
     },
     searchPost (state, text) {
       state.posts = []
@@ -58,7 +57,6 @@ export default new Vuex.Store({
           state.posts.push(state.searchPosts[i])
         }
       }
-      console.log(state.posts)
     }
   },
   actions: {

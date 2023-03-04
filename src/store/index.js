@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     allPosts: null,
     searchPosts: null,
-    posts: null
+    posts: null,
+    search: null
   },
   getters: {
     getPosts: state => state.posts
@@ -29,7 +30,14 @@ export default new Vuex.Store({
       }
     },
     addPost (state, post) {
-      state.posts.unshift(post)
+      state.allPosts.unshift(post)
+      state.searchPosts = state.allPosts
+      state.posts = []
+      if (state.searchPosts.length) {
+        for (let i = 0, j = 10; i < j; i++) {
+          state.posts.push(state.searchPosts[i])
+        }
+      }
     },
     deletePost (state, index) {
       state.posts.splice(index, 1)
@@ -45,10 +53,12 @@ export default new Vuex.Store({
         return postName.search(text.toLowerCase()) !== -1
       })
       if (state.searchPosts.length) {
-        for (let i = 0, j = 10; i < j; i++) {
+        const max = state.searchPosts.length
+        for (let i = 0, j = max < 10 ? max : 10; i < j; i++) {
           state.posts.push(state.searchPosts[i])
         }
       }
+      console.log(state.posts)
     }
   },
   actions: {

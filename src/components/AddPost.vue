@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="align-center mb-5">
       <v-col sm="8" md="9" v-if="openNewPost">
-        <div class="id">
+        <div>
           <v-text-field
             v-model="post.id"
             placeholder="Введите id"></v-text-field>

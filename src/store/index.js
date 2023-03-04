@@ -16,24 +16,16 @@ export default new Vuex.Store({
   mutations: {
     postsMutations (state, payload) {
       state.allPosts = payload
+      state.searchPosts = payload
       state.posts = []
       for (let i = 0, j = 10; i < j; i++) {
-        state.posts.push(payload[i])
+        state.posts.push(state.searchPosts[i])
       }
     },
     addPostsOnScroll (state, index) {
-      if (!state.search) {
-        if (index < state.allPosts.length) {
-          for (let i = index, j = index + 10; i < j; i++) {
-            state.posts.push(state.allPosts[i])
-          }
-        }
-      } else {
-        if (index < state.searchPosts.length) {
-          console.log(index)
-          for (let i = index, j = index + 10; i < j; i++) {
-            state.posts.push(state.searchPosts[i])
-          }
+      if (index < state.searchPosts.length) {
+        for (let i = index, j = index + 10; i < j; i++) {
+          state.posts.push(state.searchPosts[i])
         }
       }
     },

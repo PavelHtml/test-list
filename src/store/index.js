@@ -7,7 +7,6 @@ export default new Vuex.Store({
   state: {
     allPosts: null,
     searchPosts: null,
-    search: false,
     posts: null
   },
   getters: {
@@ -40,7 +39,6 @@ export default new Vuex.Store({
       console.log(state.posts[item.index].name)
     },
     searchPost (state, text) {
-      state.search = true
       state.posts = []
       state.searchPosts = state.allPosts.filter(post => {
         const postName = post.name.toLowerCase()

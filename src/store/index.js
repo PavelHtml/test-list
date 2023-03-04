@@ -24,6 +24,7 @@ export default new Vuex.Store({
     },
     editPostName (state, item) {
       state.posts[item.index].name = item.name
+      console.log(state.posts[item.index].name)
     },
     searchPost (state, text) {
       state.posts = state.allPosts.filter(post => {

@@ -3,34 +3,79 @@
     <v-list three-line>
       <template v-for="(item, index) in posts">
         <v-row class="align-center mb-5 hover" :key="item.id">
-          <v-col  sm="8" md="9" @click.prevent="editPost(index)">
+          <v-col  sm="8" md="9">
             <div class="id">{{item.id}}</div>
             <h3>
               <div
-                v-show="updatePostIndex === index"
+                v-if="post.index === index"
                 ><v-text-field
                 :ref="`name${index}`"
-                :value="item.name"
-                @input="updatePostName"></v-text-field>
+                v-model="post.name"></v-text-field>
               </div>
-              <div v-show="updatePostIndex !== index">{{item.name}}</div>
+              <div v-else>{{item.name}}</div>
             </h3>
           </v-col>
-          <v-col sm="4" md="3" class="d-flex flex-row">
-            <v-btn
-              class="ma-2"
-              color="red"
-              @click.prevent="deletePost(index)"
-              dark
-            >
-              Удалить
-              <v-icon
+          <v-col sm="4" md="3">
+            <div v-if="post.index !== index">
+              <v-btn
+                class="ma-2"
+                color="red"
+                @click.prevent="deletePost(index)"
                 dark
-                right
               >
-                mdi-cancel
-              </v-icon>
-            </v-btn>
+                Удалить
+                <v-icon
+                  dark
+                  right
+                >
+                  mdi-cancel
+                </v-icon>
+              </v-btn>
+              <v-btn
+                class="ma-2"
+                color="blue"
+                @click.prevent="editPost(index, item.name)"
+                dark
+              >
+                Редактировать
+                <v-icon
+                  dark
+                  right
+                >
+                  mdi-pen
+                </v-icon>
+              </v-btn>
+            </div>
+            <div v-else>
+              <v-btn
+                class="ma-2"
+                color="red"
+                @click.prevent="cencelEdit()"
+                dark
+              >
+                Отмена
+                <v-icon
+                  dark
+                  right
+                >
+                  mdi-cancel
+                </v-icon>
+              </v-btn>
+              <v-btn
+                class="ma-2"
+                color="green"
+                @click.prevent="savePost(post)"
+                dark
+              >
+                Сохронить
+                <v-icon
+                  dark
+                  right
+                >
+                  mdi-content-save-check-outline
+                </v-icon>
+              </v-btn>
+            </div>
           </v-col>
         </v-row>
       </template>
@@ -40,7 +85,6 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import debounce from 'lodash.debounce'
 
 export default {
   name: 'PostsList',
@@ -51,7 +95,10 @@ export default {
   },
   data () {
     return {
-      updatePostIndex: null
+      post: {
+        index: null,
+        name: null
+      }
     }
   },
   methods: {
@@ -62,17 +109,17 @@ export default {
     ...mapActions({
       getTestData: 'getTestData'
     }),
-    updatePostName: debounce(function (e) {
-      const newPost = {
-        index: this.updatePostIndex,
-        name: e
-      }
-      this.editPostName(newPost)
-    }, 1000),
-    editPost (index) {
-      const nameField = this.$refs[`name${index}`][0]
-      this.updatePostIndex = index
-      nameField.focus()
+    cencelEdit () {
+      this.post.name = null
+      this.post.index = null
+    },
+    savePost (post) {
+      this.editPostName(post)
+      this.cencelEdit()
+    },
+    editPost (index, name) {
+      this.post.name = name
+      this.post.index = index
     }
   },
   mounted () {

@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     allPosts: null,
     searchPosts: null,
-    posts: null
+    posts: null,
+    postStep: 10
   },
   getters: {
     getPosts: state => state.posts
@@ -15,9 +16,9 @@ export default new Vuex.Store({
   mutations: {
     postsMutations (state, payload) {
       state.allPosts = payload
-      state.searchPosts = payload
+      state.searchPosts = state.allPosts
       state.posts = []
-      for (let i = 0, j = 10; i < j; i++) {
+      for (let i = 0, j = state.postStep; i < j; i++) {
         state.posts.push(state.searchPosts[i])
       }
     },
@@ -34,7 +35,7 @@ export default new Vuex.Store({
       state.posts = []
       if (state.searchPosts.length) {
         const max = state.searchPosts.length
-        for (let i = 0, j = max < 10 ? max : 10; i < j; i++) {
+        for (let i = 0, j = max < state.postStep ? max : state.postStep; i < j; i++) {
           state.posts.push(state.searchPosts[i])
         }
       }
@@ -53,7 +54,7 @@ export default new Vuex.Store({
       })
       if (state.searchPosts.length) {
         const max = state.searchPosts.length
-        for (let i = 0, j = max < 10 ? max : 10; i < j; i++) {
+        for (let i = 0, j = max < state.postStep ? max : state.postStep; i < j; i++) {
           state.posts.push(state.searchPosts[i])
         }
       }

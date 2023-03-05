@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-list three-line>
-      <template v-for="(item, index) in posts">
+      <template v-for="(item, index) in getPosts">
         <v-row class="align-center mb-5 hover" :key="item.id">
           <v-col  sm="8" md="9">
             <div>{{item.id}}</div>

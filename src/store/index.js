@@ -18,13 +18,12 @@ export default new Vuex.Store({
       state.allPosts = payload
       state.searchPosts = state.allPosts
       state.posts = []
-      for (let i = 0, j = state.postStep; i < j; i++) {
-        state.posts.push(state.searchPosts[i])
-      }
+      this.commit('addPostsOnScroll', 0)
     },
     addPostsOnScroll (state, index) {
       if (index < state.searchPosts.length) {
-        for (let i = index, j = index + 10; i < j; i++) {
+        const max = state.searchPosts.length
+        for (let i = 0, j = max < state.postStep ? max : state.postStep; i < j; i++) {
           state.posts.push(state.searchPosts[i])
         }
       }
@@ -33,12 +32,7 @@ export default new Vuex.Store({
       state.allPosts.unshift(post)
       state.searchPosts = state.allPosts
       state.posts = []
-      if (state.searchPosts.length) {
-        const max = state.searchPosts.length
-        for (let i = 0, j = max < state.postStep ? max : state.postStep; i < j; i++) {
-          state.posts.push(state.searchPosts[i])
-        }
-      }
+      this.commit('addPostsOnScroll', 0)
     },
     deletePost (state, index) {
       state.posts.splice(index, 1)
@@ -52,12 +46,7 @@ export default new Vuex.Store({
         const postName = post.name.toLowerCase()
         return postName.search(text.toLowerCase()) !== -1
       })
-      if (state.searchPosts.length) {
-        const max = state.searchPosts.length
-        for (let i = 0, j = max < state.postStep ? max : state.postStep; i < j; i++) {
-          state.posts.push(state.searchPosts[i])
-        }
-      }
+      this.commit('addPostsOnScroll', 0)
     }
   },
   actions: {

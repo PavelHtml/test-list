@@ -23,7 +23,7 @@ export default new Vuex.Store({
     addPostsOnScroll (state, index) {
       if (index < state.searchPosts.length) {
         const max = state.searchPosts.length
-        for (let i = 0, j = max < state.postStep ? max : state.postStep; i < j; i++) {
+        for (let i = index, j = max < state.postStep ? max : state.postStep; i < j; i++) {
           state.posts.push(state.searchPosts[i])
         }
       }

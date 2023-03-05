@@ -121,7 +121,7 @@ export default {
       this.post.name = name
       this.post.index = index
     },
-    handleScroll (event) {
+    handleScroll () {
       const windowHeight = document.body.scrollHeight - 100
       const scrollTop = Math.ceil(window.scrollY + window.innerHeight)
       if (windowHeight < scrollTop) {

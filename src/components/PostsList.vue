@@ -87,9 +87,9 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'PostsList',
   computed: {
-    ...mapGetters({
-      posts: 'getPosts'
-    })
+    ...mapGetters([
+      'getPosts'
+    ])
   },
   data () {
     return {
@@ -101,14 +101,14 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({
-      deletePost: 'deletePost',
-      editPostName: 'editPostName',
-      addPostsOnScroll: 'addPostsOnScroll'
-    }),
-    ...mapActions({
-      getTestData: 'getTestData'
-    }),
+    ...mapMutations([
+      'deletePost',
+      'editPostName',
+      'addPostsOnScroll'
+    ]),
+    ...mapActions([
+      'getTestData'
+    ]),
     cencelEdit () {
       this.post.name = null
       this.post.index = null

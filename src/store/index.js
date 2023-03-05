@@ -14,12 +14,6 @@ export default new Vuex.Store({
     getPosts: state => state.posts
   },
   mutations: {
-    postsMutations (state, payload) {
-      state.allPosts = payload
-      state.searchPosts = state.allPosts
-      state.posts = []
-      this.commit('addPostsOnScroll', 0)
-    },
     addPostsOnScroll (state, index) {
       if (index < state.searchPosts.length) {
         const max = state.searchPosts.length
@@ -28,6 +22,20 @@ export default new Vuex.Store({
           state.posts.push(state.searchPosts[i])
         }
       }
+    },
+    postsMutations (state, payload) {
+      state.allPosts = payload
+      state.searchPosts = state.allPosts
+      state.posts = []
+      this.commit('addPostsOnScroll', 0)
+    },
+    searchPost (state, text) {
+      state.posts = []
+      state.searchPosts = state.allPosts.filter(post => {
+        const postName = post.name.toLowerCase()
+        return postName.search(text.toLowerCase()) !== -1
+      })
+      this.commit('addPostsOnScroll', 0)
     },
     addPost (state, post) {
       state.allPosts.unshift(post)
@@ -40,14 +48,6 @@ export default new Vuex.Store({
     },
     editPostName (state, item) {
       state.posts[item.index].name = item.name
-    },
-    searchPost (state, text) {
-      state.posts = []
-      state.searchPosts = state.allPosts.filter(post => {
-        const postName = post.name.toLowerCase()
-        return postName.search(text.toLowerCase()) !== -1
-      })
-      this.commit('addPostsOnScroll', 0)
     }
   },
   actions: {

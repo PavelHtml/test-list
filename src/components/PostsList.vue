@@ -124,7 +124,7 @@ export default {
     handleScroll (event) {
       const windowHeight = document.body.scrollHeight - 100
       const scrollTop = Math.ceil(window.scrollY + window.innerHeight)
-      if (windowHeight < scrollTop && this.postsCount === this.getPosts.length) {
+      if (windowHeight < scrollTop) {
         this.addPostsOnScroll(this.postsCount)
         this.postsCount += 10
       }
